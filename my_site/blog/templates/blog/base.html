@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Blog</title>
+
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+    <!-- medium.com -->
+    <script src="//cdn.jsdelivr.net/npm/medium-editor@latest/dist/js/medium-editor.min.js"></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/medium-editor@latest/dist/css/medium-editor.min.css" type="text/css" media="screen" charset="utf-8">
+
+    <!-- internal css/js -->
+    <link rel="stylesheet" href="{% static 'css/blog.css'%}">
+
+  </head>
+  <body>
+    <div class="container">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand" href="{% url 'post_list' %}">MyBlog</a>
+
+      <div class="container">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active"><a class="nav-link" href="#">Home </a></li>
+          <li class="nav-item active"><a class="nav-link" href="{% url 'about' %}">About</a></li>
+        </ul>
+
+        <div class="text-right">
+
+
+        <ul class="navbar-nav mr-auto">
+          {% if user.is_authenticated %}
+            <li class="nav-item active"><a class="nav-link" href="{% url 'post_new' %}">New Post</a></li>
+            <li class="nav-item active"><a class="nav-link" href="{% url 'post_draft_list' %}">Drafts</a></li>
+            <li class="nav-item active"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
+            <li class="nav-item active">Welcome {{user.username}}</a></li>
+          {% else %}
+          <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">
+            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-file-person-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" d="M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm-1 7a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm-3 4c2.623 0 4.146.826 5 1.755V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-1.245C3.854 11.825 5.377 11 8 11z"/>
+            </svg>
+          </a></li>
+          {% endif %}
+
+        </ul>
+        </div>
+      </nav>
+
+
+        <div class="row">
+          <div class="col-md-8">
+            {% block content %}
+            {% endblock %}
+          </div>
+        </div>
+      </div>
+
+  </body>
+</html>
